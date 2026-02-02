@@ -1,23 +1,25 @@
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { MetricsTable } from "@/components/metrics-table";
-import { fetchMetricsFromGitHub, getLastUpdated } from "@/lib/fetch-metrics";
+import { ToolsTable } from "@/components/tools-table";
+import { Tool } from "@/types/tools";
+import { promises as fs } from "fs";
+import path from "path";
 
-export const revalidate = 3600; // Revalidate every hour
+export const dynamic = "force-dynamic";
+
+async function getTools(): Promise<Tool[]> {
+  try {
+    const dataFilePath = path.join(process.cwd(), "data", "tools.json");
+    const data = await fs.readFile(dataFilePath, "utf-8");
+    const tools: Tool[] = JSON.parse(data);
+    return tools.sort((a, b) => a.order - b.order);
+  } catch {
+    return [];
+  }
+}
 
 export default async function HomePage() {
-  const [metrics, lastUpdated] = await Promise.all([
-    fetchMetricsFromGitHub(),
-    getLastUpdated(),
-  ]);
-
-  const formattedDate = lastUpdated
-    ? new Date(lastUpdated).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      })
-    : null;
+  const tools = await getTools();
 
   return (
     <div className="min-h-screen bg-theme transition-colors duration-200">
@@ -28,7 +30,7 @@ export default async function HomePage() {
             <Logo size="md" className="text-theme" />
             <div className="h-5 w-px bg-[var(--border-color)]" />
             <span className="text-sm font-medium text-theme-muted">
-              Analytics SDK Reference
+              Internal Tooling
             </span>
           </div>
           <ThemeToggle />
@@ -37,44 +39,22 @@ export default async function HomePage() {
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-10">
-        <div className="max-w-6xl mx-auto space-y-8">
+        <div className="max-w-4xl mx-auto space-y-8">
           {/* Title */}
           <div className="space-y-2">
             <h1 className="text-3xl font-semibold tracking-tight text-theme">
-              SDK Metrics Reference
+              Internal Tools
             </h1>
             <p className="text-theme-muted">
-              All trackable events and methods available in the Veya Analytics SDK.
+              Quick access to Veya internal tools and resources.
             </p>
-            {formattedDate && (
-              <p className="text-xs text-theme-muted/60">
-                Last synced from{" "}
-                <a
-                  href="https://github.com/adam-3owl/veya-analytics-pkg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2"
-                >
-                  veya-analytics-pkg
-                </a>{" "}
-                on {formattedDate}
-              </p>
-            )}
           </div>
 
-          {/* Metrics Table */}
-          <MetricsTable metrics={metrics} />
+          {/* Tools Table */}
+          <ToolsTable tools={tools} />
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="relative border-t border-theme mt-20 py-8">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-sm text-theme-muted">
-            Veya Analytics SDK v1.0.0 · Data synced hourly from GitHub
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -13,28 +13,29 @@ npm run lint     # Run Next.js linting
 
 ## Architecture
 
-This is a Next.js 14 App Router application that displays a filterable reference table of Veya Analytics SDK metrics.
+This is a Next.js 14 App Router application that serves as an internal tools directory for Veya.
 
 ### Key Files
 
-- `app/page.tsx` - Main page with search, category filters, and metrics table
-- `types/metrics.ts` - All SDK metrics data with descriptions, methods, and categories
+- `app/page.tsx` - Main page displaying the tools table
+- `app/admin/page.tsx` - Admin page for managing tools (password protected)
+- `app/api/tools/route.ts` - API routes for CRUD operations on tools
+- `types/tools.ts` - Tool interface definition
+- `data/tools.json` - Persistent storage for tools data
+- `components/tools-table.tsx` - Table component for displaying tools
 - `components/ui/` - shadcn/ui primitives (Button, Input, etc.)
 - `components/logo.tsx` - Veya logo component
 
-### Adding New Metrics
+### Adding/Managing Tools
 
-Add new metrics to the `metrics` array in `types/metrics.ts`:
+Tools are managed via the admin page at `/admin`. The admin password is set via the `ADMIN_PASSWORD` environment variable.
 
-```typescript
-{
-  name: "event_name",
-  method: "methodName(params)",
-  category: "ecommerce", // one of MetricCategory
-  description: "What this event tracks",
-  parameters?: "param1, param2" // optional
-}
-```
+Each tool has:
+- `id` - Unique identifier
+- `name` - Display name
+- `description` - Brief description
+- `url` - Link to the tool
+- `order` - Display order (managed via up/down buttons)
 
 ### Styling
 

@@ -4,18 +4,16 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Veya Analytics | SDK Reference",
-  description:
-    "Reference documentation for all trackable metrics and events in the Veya Analytics SDK",
+  title: "Veya | Internal Tooling",
+  description: "Veya internal tools directory",
   openGraph: {
-    title: "Veya Analytics SDK Reference",
-    description:
-      "Complete reference for all trackable events including e-commerce, session, menu, and search analytics",
+    title: "Veya Internal Tooling",
+    description: "Quick access to Veya internal tools and resources",
     type: "website",
   },
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
   },
 };
 
