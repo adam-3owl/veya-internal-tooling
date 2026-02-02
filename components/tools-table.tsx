@@ -13,6 +13,9 @@ interface ToolsTableProps {
 export function ToolsTable({ tools }: ToolsTableProps) {
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  // Safety check for non-array data
+  const toolsList = Array.isArray(tools) ? tools : [];
+
   const copyToClipboard = async (tool: Tool) => {
     try {
       await navigator.clipboard.writeText(tool.url);
@@ -23,7 +26,7 @@ export function ToolsTable({ tools }: ToolsTableProps) {
     }
   };
 
-  if (tools.length === 0) {
+  if (toolsList.length === 0) {
     return (
       <div className="border border-theme rounded-lg p-12 text-center">
         <p className="text-theme-muted">No tools configured yet.</p>
@@ -49,7 +52,7 @@ export function ToolsTable({ tools }: ToolsTableProps) {
             </tr>
           </thead>
           <tbody className="divide-y divide-[var(--border-color)]">
-            {tools.map((tool) => (
+            {toolsList.map((tool) => (
               <tr
                 key={tool.id}
                 className="hover:bg-[var(--muted-color)] transition-colors"

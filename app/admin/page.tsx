@@ -41,9 +41,15 @@ export default function AdminPage() {
     try {
       const res = await fetch("/api/tools");
       const data = await res.json();
-      setTools(data);
+      if (Array.isArray(data)) {
+        setTools(data);
+      } else {
+        setTools([]);
+        console.error("API returned non-array:", data);
+      }
     } catch (err) {
       console.error("Failed to fetch tools:", err);
+      setTools([]);
     }
   };
 
