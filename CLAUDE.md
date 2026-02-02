@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with this repository.
 
 ## Commands
 
@@ -13,49 +13,31 @@ npm run lint     # Run Next.js linting
 
 ## Architecture
 
-This is a Next.js 14 App Router application that converts Figma designs into PRDs (Product Requirements Documents) and creates Linear tickets.
+This is a Next.js 14 App Router application that displays a filterable reference table of Veya Analytics SDK metrics.
 
-### Workflow State Machine
+### Key Files
 
-The app follows a linear workflow managed in `app/page.tsx` via `WorkflowState`:
+- `app/page.tsx` - Main page with search, category filters, and metrics table
+- `types/metrics.ts` - All SDK metrics data with descriptions, methods, and categories
+- `components/ui/` - shadcn/ui primitives (Button, Input, etc.)
+- `components/logo.tsx` - Veya logo component
 
-1. **upload** - User adds Figma URLs via `FigmaUploadStep`
-2. **generate-prd** - AI generates PRD from frames via `PRDGenerationStep`
-3. **configure-linear** - User selects Linear team/project/milestone via `LinearConfigStep`
-4. **create-tickets** - Tickets created from PRD via `TicketCreationStep`
-5. **complete** - Success screen
+### Adding New Metrics
 
-All workflow state lives in the root page component and flows down through props.
+Add new metrics to the `metrics` array in `types/metrics.ts`:
 
-### API Routes
-
-- `POST /api/figma/frames` - Fetches Figma file metadata and frame preview images. Extracts file key and node ID from URLs, calls Figma API.
-- `POST /api/generate-prd` - Sends frames to Claude API, returns structured PRD JSON matching `GeneratedPRD` type.
-
-### Type Definitions
-
-All shared types are in `types/workflow.ts`:
-- `FigmaFrame`, `GeneratedPRD`, `PRDSection` - Design and PRD data
-- `LinearTeam`, `LinearProject`, `LinearMilestone`, `LinearTicket` - Linear entities
-- `WorkflowState`, `WorkflowStep` - State machine types
-
-### Component Patterns
-
-- **UI components** (`components/ui/`) - shadcn/ui primitives built on Radix UI
-- **Step components** (`components/steps/`) - Each workflow step is self-contained
-- **Shared components** - `EmptyState`, `LoadingSkeleton`, `WorkflowProgress`
-
-Use the `cn()` utility from `lib/utils.ts` for conditional class merging (clsx + tailwind-merge).
-
-## Environment Variables
-
-Required in `.env.local`:
-```
-FIGMA_API_KEY=      # Figma personal access token
-ANTHROPIC_API_KEY=  # For PRD generation via Claude API
-LINEAR_API_KEY=     # For Linear integration (not yet implemented)
+```typescript
+{
+  name: "event_name",
+  method: "methodName(params)",
+  category: "ecommerce", // one of MetricCategory
+  description: "What this event tracks",
+  parameters?: "param1, param2" // optional
+}
 ```
 
-## Key Integration Points
+### Styling
 
-When implementing Linear integration, add API routes at `app/api/linear/` and update `LinearConfigStep` and `TicketCreationStep` to call them.
+Uses Tailwind CSS with CSS variables for theming. Theme colors defined in `app/globals.css`.
+
+Use the `cn()` utility from `lib/utils.ts` for conditional class merging.
