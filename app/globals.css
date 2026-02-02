@@ -1,0 +1,317 @@
+@import "tailwindcss";
+
+/* Dark mode by class */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Theme configuration */
+@theme {
+  --radius: 0.625rem;
+  --radius-sm: 0.375rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Fonts */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Custom animations */
+  --animate-fade-in: fade-in 0.4s ease-out;
+  --animate-slide-up: slide-up 0.3s ease-out;
+  --animate-slide-down: slide-down 0.3s ease-out;
+  --animate-scale-in: scale-in 0.2s ease-out;
+  --animate-pulse-subtle: pulse-subtle 2s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    0% { transform: translateY(8px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes slide-down {
+    0% { transform: translateY(-8px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes scale-in {
+    0% { transform: scale(0.96); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Custom colors for Tailwind v4 */
+  --color-background: var(--background-color);
+  --color-foreground: var(--foreground-color);
+  --color-card: var(--card-color);
+  --color-card-foreground: var(--card-foreground-color);
+  --color-popover: var(--popover-color);
+  --color-popover-foreground: var(--popover-foreground-color);
+  --color-primary: var(--primary-color);
+  --color-primary-foreground: var(--primary-foreground-color);
+  --color-secondary: var(--secondary-color);
+  --color-secondary-foreground: var(--secondary-foreground-color);
+  --color-muted: var(--muted-color);
+  --color-muted-foreground: var(--muted-foreground-color);
+  --color-accent: var(--accent-color);
+  --color-accent-foreground: var(--accent-foreground-color);
+  --color-destructive: var(--destructive-color);
+  --color-destructive-foreground: var(--destructive-foreground-color);
+  --color-border: var(--border-color);
+  --color-input: var(--input-color);
+  --color-ring: var(--ring-color);
+}
+
+/* Sleek dark theme - deep navy with subtle blue accents */
+:root {
+  /* Core backgrounds */
+  --background-color: #09090b;
+  --foreground-color: #fafafa;
+  --card-color: #0c0c0f;
+  --card-foreground-color: #fafafa;
+  --popover-color: #0c0c0f;
+  --popover-foreground-color: #fafafa;
+
+  /* Primary - bright white for high contrast CTAs */
+  --primary-color: #fafafa;
+  --primary-foreground-color: #09090b;
+
+  /* Secondary - subtle dark surface */
+  --secondary-color: #18181b;
+  --secondary-foreground-color: #fafafa;
+
+  /* Muted - for subtle backgrounds and text */
+  --muted-color: #18181b;
+  --muted-foreground-color: #71717a;
+
+  /* Accent - subtle highlight */
+  --accent-color: #1e1e24;
+  --accent-foreground-color: #fafafa;
+
+  /* Destructive */
+  --destructive-color: #dc2626;
+  --destructive-foreground-color: #fafafa;
+
+  /* Borders and inputs */
+  --border-color: #27272a;
+  --input-color: #27272a;
+  --ring-color: #3f3f46;
+
+  /* Legacy HSL variables for component compatibility */
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 4.7%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 4.7%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 3.9%;
+  --secondary: 0 0% 9.4%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 9.4%;
+  --muted-foreground: 0 0% 44.3%;
+  --accent: 0 0% 11.8%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 15.3%;
+  --input: 0 0% 15.3%;
+  --ring: 0 0% 24.7%;
+  --radius: 0.625rem;
+}
+
+/* Light theme */
+.light {
+  /* Core backgrounds */
+  --background-color: #ffffff;
+  --foreground-color: #09090b;
+  --card-color: #ffffff;
+  --card-foreground-color: #09090b;
+  --popover-color: #ffffff;
+  --popover-foreground-color: #09090b;
+
+  /* Primary - dark for high contrast CTAs */
+  --primary-color: #18181b;
+  --primary-foreground-color: #fafafa;
+
+  /* Secondary - light gray surface */
+  --secondary-color: #f4f4f5;
+  --secondary-foreground-color: #18181b;
+
+  /* Muted - for subtle backgrounds and text */
+  --muted-color: #f4f4f5;
+  --muted-foreground-color: #71717a;
+
+  /* Accent - subtle highlight */
+  --accent-color: #f4f4f5;
+  --accent-foreground-color: #18181b;
+
+  /* Destructive */
+  --destructive-color: #ef4444;
+  --destructive-foreground-color: #fafafa;
+
+  /* Borders and inputs */
+  --border-color: #e4e4e7;
+  --input-color: #e4e4e7;
+  --ring-color: #a1a1aa;
+
+  color-scheme: light;
+}
+
+/* Base styles */
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  color-scheme: dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ring);
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(255, 255, 255, 0.15);
+  color: inherit;
+}
+
+.light ::selection {
+  background: rgba(0, 0, 0, 0.1);
+  color: inherit;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+/* Custom utility classes */
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility animate-fade-in {
+  animation: var(--animate-fade-in);
+}
+
+@utility animate-slide-up {
+  animation: var(--animate-slide-up);
+}
+
+@utility animate-slide-down {
+  animation: var(--animate-slide-down);
+}
+
+@utility animate-scale-in {
+  animation: var(--animate-scale-in);
+}
+
+@utility animate-pulse-subtle {
+  animation: var(--animate-pulse-subtle);
+}
+
+/* Gradient backgrounds */
+@utility bg-gradient-subtle {
+  background: linear-gradient(to bottom right, var(--color-background), var(--color-card));
+}
+
+@utility bg-gradient-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+}
+
+/* Glass effect */
+@utility glass {
+  background: rgba(12, 12, 15, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Shimmer effect for loading states */
+@utility shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-muted) 0%,
+    var(--color-accent) 50%,
+    var(--color-muted) 100%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* Glow effects */
+@utility glow-sm {
+  box-shadow: 0 0 15px -3px rgba(255, 255, 255, 0.1);
+}
+
+@utility glow-md {
+  box-shadow: 0 0 25px -5px rgba(255, 255, 255, 0.1);
+}
+
+/* Border gradient effect */
+@utility border-gradient {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--color-card), var(--color-card)) padding-box,
+    linear-gradient(145deg, rgba(255,255,255,0.1), transparent) border-box;
+}
+
+/* Theme-aware background */
+@utility bg-theme {
+  background-color: var(--background-color);
+}
+
+/* Theme-aware text */
+@utility text-theme {
+  color: var(--foreground-color);
+}
+
+@utility text-theme-muted {
+  color: var(--muted-foreground-color);
+}
+
+/* Theme-aware border */
+@utility border-theme {
+  border-color: var(--border-color);
+}
