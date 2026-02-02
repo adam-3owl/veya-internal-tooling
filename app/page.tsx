@@ -2,17 +2,18 @@ import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ToolsTable } from "@/components/tools-table";
 import { Tool } from "@/types/tools";
-import { promises as fs } from "fs";
-import path from "path";
+import { Redis } from "@upstash/redis";
 
 export const dynamic = "force-dynamic";
 
 async function getTools(): Promise<Tool[]> {
   try {
-    const dataFilePath = path.join(process.cwd(), "data", "tools.json");
-    const data = await fs.readFile(dataFilePath, "utf-8");
-    const tools: Tool[] = JSON.parse(data);
-    return tools.sort((a, b) => a.order - b.order);
+    const redis = new Redis({
+      url: process.env.KV_REST_API_URL!,
+      token: process.env.KV_REST_API_TOKEN!,
+    });
+    const tools = await redis.get<Tool[]>("tools");
+    return (tools || []).sort((a, b) => a.order - b.order);
   } catch {
     return [];
   }
