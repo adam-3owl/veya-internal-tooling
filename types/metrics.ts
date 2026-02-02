@@ -4,6 +4,7 @@ export type MetricCategory =
   | "ecommerce"
   | "authentication"
   | "store"
+  | "location"
   | "menu"
   | "search"
   | "loyalty"
@@ -209,6 +210,129 @@ export const metrics: Metric[] = [
     parameters: "orderType: 'pickup' | 'delivery'",
   },
 
+  // Location Selection Events
+  {
+    name: "location_modal_opened",
+    method: "locationModalOpened(options)",
+    category: "location",
+    description: "Track when location selection modal opens.",
+    parameters: "trigger?, hasRecentLocations?",
+  },
+  {
+    name: "fulfillment_method_selected",
+    method: "fulfillmentMethodSelected(options)",
+    category: "location",
+    description: "Track when user selects fulfillment method (pickup/delivery).",
+    parameters: "method, previousMethod?",
+  },
+  {
+    name: "location_permission_requested",
+    method: "locationPermissionRequested()",
+    category: "location",
+    description: "Track when location permission is requested from browser.",
+  },
+  {
+    name: "location_permission_granted",
+    method: "locationPermissionResponse(true)",
+    category: "location",
+    description: "Track when user grants location permission.",
+  },
+  {
+    name: "location_permission_denied",
+    method: "locationPermissionResponse(false)",
+    category: "location",
+    description: "Track when user denies location permission.",
+  },
+  {
+    name: "location_search_started",
+    method: "locationSearchStarted()",
+    category: "location",
+    description: "Track when user starts typing in location search.",
+  },
+  {
+    name: "location_search_results",
+    method: "locationSearchResults(options)",
+    category: "location",
+    description: "Track location search results returned.",
+    parameters: "query, resultCount, searchType?",
+  },
+  {
+    name: "location_selected",
+    method: "locationSelected(options)",
+    category: "location",
+    description: "Track when user selects a location.",
+    parameters: "locationId, locationName, fulfillmentMethod, resultPosition?, selectionSource?, distance?",
+  },
+  {
+    name: "location_view_toggled",
+    method: "locationViewToggled(view)",
+    category: "location",
+    description: "Track when user toggles between list and map view.",
+    parameters: "view: 'list' | 'map'",
+  },
+  {
+    name: "recent_location_used",
+    method: "recentLocationUsed(options)",
+    category: "location",
+    description: "Track when returning customer uses a recent location.",
+    parameters: "locationId, locationName, position, lastOrderDate?",
+  },
+  {
+    name: "location_search_no_results",
+    method: "locationSearchNoResults(options)",
+    category: "location",
+    description: "Track when location search returns no results.",
+    parameters: "query, searchType?",
+  },
+  {
+    name: "location_search_error",
+    method: "locationSearchError(options)",
+    category: "location",
+    description: "Track location search error.",
+    parameters: "errorType, errorMessage?, query?",
+  },
+  {
+    name: "delivery_unavailable",
+    method: "deliveryUnavailable(options)",
+    category: "location",
+    description: "Track when delivery is unavailable for an address.",
+    parameters: "address, reason?, nearestLocationId?, nearestDistance?",
+  },
+  {
+    name: "location_services_disabled",
+    method: "locationServicesDisabled()",
+    category: "location",
+    description: "Track when user has location services disabled.",
+  },
+  {
+    name: "delivery_address_entered",
+    method: "deliveryAddressEntered(options)",
+    category: "location",
+    description: "Track when user enters delivery address.",
+    parameters: "addressType?, hasApartment?",
+  },
+  {
+    name: "delivery_address_validated",
+    method: "deliveryAddressValidated(options)",
+    category: "location",
+    description: "Track when delivery address is validated.",
+    parameters: "success, validationType?, errorReason?",
+  },
+  {
+    name: "delivery_details_completed",
+    method: "deliveryDetailsCompleted(options)",
+    category: "location",
+    description: "Track when user completes delivery details form.",
+    parameters: "hasApartment, hasInstructions, deliveryOption?",
+  },
+  {
+    name: "delivery_fallback_to_pickup",
+    method: "deliveryFallbackToPickup(options)",
+    category: "location",
+    description: "Track when user switches from delivery to pickup after delivery unavailable.",
+    parameters: "reason, selectedLocationId?, selectedLocationName?",
+  },
+
   // Menu Events
   {
     name: "menu_loaded",
@@ -408,6 +532,7 @@ export const categoryLabels: Record<MetricCategory, string> = {
   ecommerce: "E-commerce",
   authentication: "Authentication",
   store: "Store",
+  location: "Location",
   menu: "Menu",
   search: "Search",
   loyalty: "Loyalty & Promos",
@@ -421,6 +546,7 @@ export const categoryColors: Record<MetricCategory, string> = {
   ecommerce: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
   authentication: "bg-violet-500/10 text-violet-400 border-violet-500/20",
   store: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+  location: "bg-teal-500/10 text-teal-400 border-teal-500/20",
   menu: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
   search: "bg-pink-500/10 text-pink-400 border-pink-500/20",
   loyalty: "bg-orange-500/10 text-orange-400 border-orange-500/20",
