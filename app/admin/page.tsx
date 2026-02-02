@@ -53,14 +53,11 @@ export default function AdminPage() {
     setLoading(true);
 
     try {
-      // Test the password by making an API call
-      const res = await fetch("/api/tools", {
+      const res = await fetch("/api/auth", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           "x-admin-password": password,
         },
-        body: JSON.stringify({ name: "__test__", description: "test", url: "test" }),
       });
 
       if (res.status === 401) {
@@ -69,13 +66,11 @@ export default function AdminPage() {
         return;
       }
 
-      // If we got here with a 201, we accidentally created a test tool - delete it
-      if (res.status === 201) {
-        const tool = await res.json();
-        await fetch(`/api/tools?id=${tool.id}`, {
-          method: "DELETE",
-          headers: { "x-admin-password": password },
-        });
+      if (res.status === 500) {
+        const data = await res.json();
+        setAuthError(data.error || "Server error");
+        setLoading(false);
+        return;
       }
 
       sessionStorage.setItem("adminPassword", password);
